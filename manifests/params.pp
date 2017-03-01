@@ -22,11 +22,12 @@ class erlang::params {
       if $::operatingsystemrelease and $::operatingsystemrelease =~ /^5/ {
         $local_repo_location  = '/etc/yum.repos.d/epel-erlang.repo'
         $remote_repo_location = 'https://repos.fedorapeople.org/repos/peter/erlang/epel-erlang.repo'
+      } elsif $::operatingsystemrelease and $::operatingsystemrelease =~ /^7/ {
+        $remote_repo_location = 'https://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm'
       } else {
         $local_repo_location  = undef
         $remote_repo_location = undef
       }
-
       $remote_repo_key_location = undef
       $repos                    = undef
     }

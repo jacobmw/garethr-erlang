@@ -21,10 +21,18 @@ class erlang::repo::yum (
 
   Class['erlang::repo::yum'] -> Package<| title == $package_name |>
 
-  exec { 'erlang-repo-download':
-    command => "curl -o ${local_repo_location} ${remote_repo_location}",
-    path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    creates => $local_repo_location,
+  if $::operatingsystemrelease and $::operatingsystemrelease =~ /^7/{
+    package { 'erlang-solutions':
+      ensure   => installed,
+      provider => 'rpm',
+      source   => $remote_repo_location
+    }
+  } else {
+    exec { 'erlang-repo-download':
+      command => "curl -o ${local_repo_location} ${remote_repo_location}",
+      path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+      creates => $local_repo_location,
+    }
   }
 
 }

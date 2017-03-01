@@ -33,7 +33,7 @@ class erlang (
       }
 
       # This is only needed on RHEL5, RHEL6 has erlang in EPEL.
-      if $::operatingsystemrelease =~ /^5/ {
+      if $::operatingsystemrelease =~ /^(5|7)/ {
         include '::erlang::repo::yum'
       }
     }
